@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Medicine_app</string>
+    <string name="medicine_name">Medicine Name</string>
+    <string name="medicine_detail">Medicine Detail</string>
+    <string name="list">List</string>
+    <string name="grid">Grid</string>
+    <string name="with_cardview">with CardView</string>
+    <string name="favorite">Favorite</string>
+    <string name="share">Share</string>
+    <string name="About">About</string>
+</resources>
