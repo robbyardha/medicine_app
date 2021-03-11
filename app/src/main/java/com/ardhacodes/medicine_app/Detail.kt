@@ -21,14 +21,22 @@ class Detail : AppCompatActivity(), View.OnClickListener {
         val textviewdesc: TextView = findViewById(R.id.tv_descproduct)
         val imageviewfoto: ImageView = findViewById(R.id.iv_foto)
 
-        textviewdetail.text = nama
-        textviewdesc.text = deskripsi
+        val tName  = intent.getStringExtra(EXTRA_NAME)
+        val tImg = intent.getStringExtra(EXTRA_PHOTO)
+        val tDet = intent.getStringExtra(EXTRA_DETAIL)
+
+        textviewdetail.text = tName
+        textviewdesc.text = tDet
         Glide.with(this@Detail)
-            .load(gambar)
+            .load(tImg)
             .apply(RequestOptions().override(55, 55))
             .into(imageviewfoto)
     }
-
+    companion object {
+        const val EXTRA_NAME = "extra_name"
+        const val EXTRA_PHOTO = "extra_photo"
+        const val EXTRA_DETAIL = "extra_detail"
+    }
     override fun onClick(v: View?) {
         val intent = Intent(this@Detail, MainActivity::class.java)
         startActivity(intent)

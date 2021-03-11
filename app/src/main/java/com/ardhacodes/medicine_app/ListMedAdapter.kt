@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 
-class ListMedAdapter(private val listMedicine: ArrayList<Medicine>) : RecyclerView.Adapter<ListMedAdapter.ListViewHolder>(),View.OnClickListener {
+class ListMedAdapter(val listMedicine: ArrayList<Medicine>) : RecyclerView.Adapter<ListMedAdapter.ListViewHolder>(),View.OnClickListener {
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): ListViewHolder {
         val view: View = LayoutInflater.from(viewGroup.context).inflate(
@@ -21,18 +21,30 @@ class ListMedAdapter(private val listMedicine: ArrayList<Medicine>) : RecyclerVi
         )
         return ListViewHolder(view)
     }
+
+    override fun getItemCount(): Int {
+        return listMedicine.size
+    }
+
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
-        val lm = listMedicine[position]
+        val (name, detail, foto) = listMedicine[position]
+
         Glide.with(holder.itemView.context)
-            .load(lm.foto)
+            .load(foto)
             .apply(RequestOptions().override(55, 55))
             .into(holder.imgPhoto)
-        holder.tvName.text = lm.name
-        holder.tvDetail.text = lm.detail
+
+        holder.tvName.text = name
+        holder.tvDetail.text = detail
+
+        val mContext = holder.itemView.context
+
         holder.itemView.setOnClickListener {
-            val intent = Intent(this@ListMedAdapter, Detail::class.java)
-            intent.putExtra(listMedicine)[position]
-            startActivity(intent)
+            val moveDetail = Intent(mContext, Detail::class.java)
+            moveDetail.putExtra(Detail.EXTRA_NAME, name)
+            moveDetail.putExtra(Detail.EXTRA_DETAIL, detail)
+            moveDetail.putExtra(Detail.EXTRA_PHOTO, foto)
+            mContext.startActivity(moveDetail)
         }
     }
 
@@ -41,9 +53,7 @@ class ListMedAdapter(private val listMedicine: ArrayList<Medicine>) : RecyclerVi
     }
 
 
-    override fun getItemCount(): Int {
-        return listMedicine.size
-    }
+
 
     inner class ListViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         var tvName: TextView = itemView.findViewById(R.id.tv_item_name)
