@@ -13,7 +13,7 @@ class Detail : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
-        val nama = intent.getStringExtra("KeyFruit")
+        val nama = intent.getStringExtra("KeyName")
         val deskripsi = intent.getStringExtra("KeyDesc")
         val gambar = intent.getStringExtra("KeyFoto")
 
@@ -21,16 +21,17 @@ class Detail : AppCompatActivity(), View.OnClickListener {
         val textviewdesc: TextView = findViewById(R.id.tv_descproduct)
         val imageviewfoto: ImageView = findViewById(R.id.iv_foto)
 
+        val tImg = intent.getIntExtra(EXTRA_PHOTO,1)
         val tName  = intent.getStringExtra(EXTRA_NAME)
-        val tImg = intent.getStringExtra(EXTRA_PHOTO)
         val tDet = intent.getStringExtra(EXTRA_DETAIL)
 
-        textviewdetail.text = tName
-        textviewdesc.text = tDet
         Glide.with(this@Detail)
             .load(tImg)
-            .apply(RequestOptions().override(55, 55))
+            //.apply(RequestOptions().override(55, 55))
+            .apply(RequestOptions())
             .into(imageviewfoto)
+        textviewdetail.text = tName
+        textviewdesc.text = tDet
     }
     companion object {
         const val EXTRA_NAME = "extra_name"
